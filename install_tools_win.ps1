@@ -1,6 +1,6 @@
-$GhdlTemp = New-TemporaryFile
-$JustTemp = New-TemporaryFile
-$GtkWaveTemp = New-TemporaryFile
+$GhdlTemp = New-TemporaryFile | Rename-Item -NewName { $_.Name + ".zip" } -PassThru  
+$JustTemp = New-TemporaryFile | Rename-Item -NewName { $_.Name + ".zip" } -PassThru  
+$GtkWaveTemp = New-TemporaryFile | Rename-Item -NewName { $_.Name + ".zip" } -PassThru  
 
 Write-Host "[-] Downloading GHDL, just and GTKWave"
 
@@ -29,12 +29,11 @@ if( !(Test-Path -Path "$HOME\Programs" -PathType Container) ) {
 }
 
 try {
-	Add-Type -AssemblyName System.IO.Compression.FileSystem
-	[System.IO.Compression.ZipFile]::ExtractToDirectory($GhdlTemp, "$HOME\Programs")
+	Expand-Archive -Force -LiteralPath $GhdlTemp -DestinationPath "$HOME\Programs"
 	Write-Host "[+] Extracted GHDL to $HOME\Programs"
-	[System.IO.Compression.ZipFile]::ExtractToDirectory($JustTemp, "$HOME\Programs\just")
+	Expand-Archive -Force -LiteralPath $JustTemp -DestinationPath "$HOME\Programs\just"
 	Write-Host "[+] Extracted just to $HOME\Programs"
-	[System.IO.Compression.ZipFile]::ExtractToDirectory($GtkWaveTemp, "$HOME\Programs")
+	Expand-Archive -Force -LiteralPath $GtkWaveTemp -DestinationPath "$HOME\Programs"
 	Write-Host "[+] Extracted GTKWave to $HOME\Programs"
 } catch {
 	Write-Host "[x] Failed to extract one or more archives. exiting ..."
