@@ -1,0 +1,7 @@
+v 4
+file . "./lab2_p1.vhd" "ced2bb16789d1ac0ce5ddcdd0d0c97d1582ce8a8" "20230324064230.252":
+  entity part1 at 1( 0) + 0 on 61;
+  architecture behave of part1 at 12( 273) + 0 on 62;
+file . "./test.vhd" "7c8d771fbaa236662cf8ce1ce0709b822170db77" "20230324064230.187":
+  entity test_part1 at 1( 0) + 0 on 59;
+  architecture behave of test_part1 at 8( 161) + 0 on 60;
