@@ -29,6 +29,7 @@ if( !(Test-Path -Path "$HOME\Programs" -PathType Container) ) {
 }
 
 try {
+	Add-Type -AssemblyName System.IO.Compression.FileSystem
 	[System.IO.Compression.ZipFile]::ExtractToDirectory($GhdlTemp, "$HOME\Programs")
 	Write-Host "[+] Extracted GHDL to $HOME\Programs"
 	[System.IO.Compression.ZipFile]::ExtractToDirectory($JustTemp, "$HOME\Programs\just")
