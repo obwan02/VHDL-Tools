@@ -11,7 +11,7 @@ try {
 	Invoke-WebRequest -Uri "https://github.com/casey/just/releases/download/1.13.0/just-1.13.0-x86_64-pc-windows-msvc.zip" -OutFile $JustTemp
 	Write-Host "[+] Downloaded just"
 
-	Invoke-WebRequest -Uri "https://sourceforge.net/projects/gtkwave/files/gtkwave-3.3.100-bin-win64/gtkwave-3.3.100-bin-win64.zip/download" -OutFile $GtkWaveTemp
+	Invoke-WebRequest -Uri "https://raw.githubusercontent.com/obwan02/VHDL-Tools/main/gtkwave-3.3.100-bin-win64.zip" -OutFile $GtkWaveTemp
 	Write-Host "[+] Downloaded GtkWave"
 
 } catch {

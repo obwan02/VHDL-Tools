@@ -1,7 +1,6 @@
 set windows-shell := ["powershell", "-c"]
 
 GHDL_FLAGS := "-fsynopsys -fexplicit -fcolor-diagnostics"
-DEFAULT_OUT := "sim_wav.ghw"
 
 # This command analyses all files
 # in the current directory, and all sub-directories.
@@ -56,7 +55,7 @@ _elaborate UNIT: (analyse '*.vhd')
 _sim UNIT STOP_TIME OUT='sim_wav.ghw':
     ghdl -r {{GHDL_FLAGS}} {{UNIT}}  --stop-time={{STOP_TIME}} --wave={{OUT}}
 
-# Simulate a design unit, and output a waveform
+# Compile all, and simulate a design unit, and output a waveform
 sim UNIT STOP_TIME OUT='sim_wav.ghw': (_elaborate UNIT) (_sim UNIT STOP_TIME OUT)
 
 # Synthesises a design. By default generates a graphviz file. See https://ghdl.github.io/ghdl/using/Synthesis.html#cmdoption-ghdl-out for more output options 
@@ -66,10 +65,10 @@ synth UNIT FMT="dot":
 
 # Opens GTKWave with the default wave file
 [windows]
-open-gtkwave FILE=DEFAULT_OUT:
+open-gtkwave FILE='sim_wav.ghw':
     gtkwave {{FILE}}
 
 # Opens GTKWave with the default wave file
 [macos]
-open-gtkwave FILE=DEFAULT_OUT:
+open-gtkwave FILE='sim_wav.ghw':
     open /Applications/gtkwave.app {{FILE}}
