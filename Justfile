@@ -3,9 +3,6 @@ set windows-shell := ["powershell", "-c"]
 GHDL_FLAGS := "-fsynopsys -fexplicit -fcolor-diagnostics"
 DEFAULT_OUT := "sim_wav.ghw"
 
-# See the docs for 'anlayse'
-a PATTERN="*.vhd": (analyse PATTERN)
-
 # This command analyses all files
 # in the current directory, and all sub-directories.
 # 
@@ -25,12 +22,20 @@ a PATTERN="*.vhd": (analyse PATTERN)
 analyse PATTERN='':
 	@echo "> Analysing VHDL Files..."
 	ghdl -a {{GHDL_FLAGS}} {{PATTERN}}
-	#
+
 # Analyse/compile selected files
 [macos]
 analyse NAME_PAT='*.vhd' RECURSE=true:
 	@echo "> Analysing VHDL Files..."
 	{{ if RECURSE { gci -r -fi *.jar ghdl -a {{GHDL_FLAGS}} {{PATTERN}} } else { gci -r -fi *.jar ghdl -a {{GHDL_FLAGS}} {{PATTERN}} } }}
+	
+# See the docs for 'anlayse'
+[windows]
+a NAME_PAT='*.vhd' RECURSE=true: (analyse NAME_PAT RECURSE)
+
+# See the docs for 'anlayse'
+[macos]
+a PATTERN="*.vhd": (analyse PATTERN)
 
 # This option should only be used
 # if you have a custom install of GHDL that
