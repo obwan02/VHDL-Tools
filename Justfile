@@ -1,10 +1,10 @@
 set windows-shell := ["powershell", "-c"]
 
-GHDL_FLAGS := "-fsynopsys -fexplicit"
-DEFAULT_OUT := "sim.ghw"
+GHDL_FLAGS := "-fsynopsys -fexplicit -fcolor-diagnostics"
+DEFAULT_OUT := "sim_wav.ghw"
 
 # See the docs for 'anlayse'
-a pattern="*.vhd": (analyse-all pattern)
+a pattern="*.vhd": (analyse pattern)
 
 # This command analyses all files
 # in the current directory, and all sub-directories.
@@ -35,7 +35,7 @@ e unit: (elaborate unit)
 # this command
 # 
 # You probably don't need to run this command
-elaborate unit: (analyse-all '*.vhd')
+elaborate unit: (analyse '*.vhd')
 	ghdl -e {{GHDL_FLAGS}} {{unit}}
 
 # This command simulates a VHDL design unit,
@@ -50,9 +50,17 @@ raw-sim unit stop_time wave_out=DEFAULT_OUT:
 # Simulate a design unit, and output a waveform
 sim unit stop_time wave_out=DEFAULT_OUT: (elaborate unit) (raw-sim unit stop_time wave_out)
 
+# Synthesises a design. By default generates a graphviz file. See https://ghdl.github.io/ghdl/using/Synthesis.html#cmdoption-ghdl-out for more output options 
+synth unit out="dot":
+	ghdl --synth {{GHDL_FLAGS}} --out={{out}} {{unit}} 
 
+
+# Opens GTKWave with the default wave file
+[windows]
 open-gtkwave wave_file=DEFAULT_OUT:
     gtkwave {{wave_file}}
 
-ensure-reqs:
-	ghdl -v
+# Opens GTKWave with the default wave file
+[macos]
+open-gtkwave wave_file=DEFAULT_OUT:
+    open /Applications/gtkwave.app {{wave_file}}
