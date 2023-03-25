@@ -16,7 +16,7 @@ try {
 
 } catch {
 	Write-Host "[x] Failed one or more downloads. exiting ..."
-	exit
+	return
 }
 
 # New Line
@@ -37,7 +37,7 @@ try {
 	Write-Host "[+] Extracted GTKWave to $HOME\Programs"
 } catch {
 	Write-Host "[x] Failed to extract one or more archives. exiting ..."
-	exit
+	return
 }
 
 # New Line
