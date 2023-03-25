@@ -29,11 +29,11 @@ if( !(Test-Path -Path "$HOME\Programs" -PathType Container) ) {
 }
 
 try {
-	Expand-Archive -Force -LiteralPath $GhdlTemp -DestinationPath "$HOME\Programs"
+	[System.IO.Compression.ZipFile]::ExtractToDirectory($GhdlTemp, "$HOME\Programs")
 	Write-Host "[+] Extracted GHDL to $HOME\Programs"
-	Expand-Archive -Force -LiteralPath $JustTemp -DestinationPath "$HOME\Programs\just"
+	[System.IO.Compression.ZipFile]::ExtractToDirectory($JustTemp, "$HOME\Programs\just")
 	Write-Host "[+] Extracted just to $HOME\Programs"
-	Expand-Archive -Force -LiteralPath $GtkWaveTemp -DestinationPath "$HOME\Programs"
+	[System.IO.Compression.ZipFile]::ExtractToDirectory($GtkWaveTemp, "$HOME\Programs")
 	Write-Host "[+] Extracted GTKWave to $HOME\Programs"
 } catch {
 	Write-Host "[x] Failed to extract one or more archives. exiting ..."
