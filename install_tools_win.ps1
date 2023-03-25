@@ -83,7 +83,7 @@ if( !(Get-Command gtkwave -ErrorAction SilentlyContinue) ) {
 	Write-Host " - Could not find GTKWave in PATH"
 	Write-Host " + Modifying profile to add GTKWave to PATH"
 
-	echo "`$env:PATH = `$env:PATH + ';' + '$HOME\Programs\GTKWave'" | Add-Content $PROFILE.CurrentUserAllHosts -Encoding UTF8
+	echo "`$env:PATH = `$env:PATH + ';' + '$HOME\Programs\gtkwave64\bin'" | Add-Content $PROFILE.CurrentUserAllHosts -Encoding UTF8
 } else {
 	Write-Host " + Found GTKWave binary in PATH @ $((Get-Command gtkwave).Path)"
 }
