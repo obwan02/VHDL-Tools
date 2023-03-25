@@ -10,9 +10,13 @@ is to make writing, compiling, and simulating VHDL fun!
 # How it Works / How to Use
 
 Once you have [installed the requirements](#installation),
-copy the `Justfile` to a project folder. For example, if I
-had a project @ `Documents/Lab1`, I would copy the `Justfile`
-to `Documents/Lab1/Justfile`.
+I'd also recommend installing the [VHDL LS](https://marketplace.visualstudio.com/items?itemName=hbohlin.vhdl-ls) 
+extension for VS Code, if you use VS Code.
+
+Now, [download the `Justfile` from this repository](https://raw.githubusercontent.com/obwan02/VHDL-Tools/main/Justfile)
+and it to a project folder. For example, if I had a project
+@ `Documents/Lab1`, I would copy the `Justfile` to
+`Documents/Lab1/Justfile`.
 
 This should be done for each new project/folder that you
 make. For example if I had a new project @ `Documents/Lab2`,
@@ -20,14 +24,6 @@ I would repeat the same process as descibed above.
 
 Now, open a terminal in that directory, and run `just
 --list` to see what command are available.
-
-# VS Code
-
-Visual Studio Code has a great language server extension
-for VHDL that gives you syntax highlighting, realtime
-errors, and more. 
-
-[Check it out here](https://marketplace.visualstudio.com/items?itemName=hbohlin.vhdl-ls)
 
 # Common Commands
 
@@ -105,8 +101,8 @@ brew install just ghdl gtkwave
 ```
 ## Windows
 
-Unless you're a Windows Powershell/CMD professional, there
-is no manual installation.
+Unless you're spectactular at Powershell (or just really
+masochistic), there is no manual installation.
 
 ### Automatic
 
@@ -114,6 +110,30 @@ From inside powershell, run:
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/obwan02/VHDL-Tools/main/install_tools_win.ps1'))
 ```
+
+### Manual
+
+Ok if you reaalllllllllly want to manually install your
+software, these are the instructions:
+
+First, download the archives for the programs:
+- [GHDL](https://github.com/ghdl/ghdl/releases/download/v3.0.0/ghdl-UCRT64.zip)
+- [just](https://github.com/casey/just/releases/download/1.13.0/just-1.13.0-x86_64-pc-windows-msvc.zip)
+- [GTKWave](https://sourceforge.net/projects/gtkwave/files/gtkwave-3.3.100-bin-win64/gtkwave-3.3.100-bin-win64.zip/download)
+
+Then extract these files to your desired installation
+location. If you are installing these programs on the
+university computers, I'd recommend extracing to a location
+accessible from all computers.
+
+Now, if you are running on a home computer, I'd recommend
+simply modify your `PATH` environment variable so that they
+include your newly acquired binaries.
+
+If you are running on a university computer, modifying the
+`PATH` is a bit harder. I'd instead recommend modifying your
+`profile.ps1` script (see https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_profiles?view=powershell-7.3)
+
 # Windows Specific Notes 
 
 The installation script modifies you powershell profile to
