@@ -21,8 +21,8 @@ if ! (command -v brew) then
     shell_profile="${HOME}/.profile"
     ;;
 
-	source $shell_profile
 esac
+	source $shell_profile
 fi
 
 echo ""

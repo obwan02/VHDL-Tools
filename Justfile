@@ -4,7 +4,7 @@ GHDL_FLAGS := "-fsynopsys -fexplicit -fcolor-diagnostics"
 DEFAULT_OUT := "sim_wav.ghw"
 
 # See the docs for 'anlayse'
-a pattern="*.vhd": (analyse pattern)
+a PATTERN="*.vhd": (analyse PATTERN)
 
 # This command analyses all files
 # in the current directory, and all sub-directories.
@@ -20,14 +20,11 @@ a pattern="*.vhd": (analyse pattern)
 # This (kind of) is equivalent to 'compilation', but it isn't really
 # 
 # TL;DR:
-# Compile selected files
-analyse pattern='*.vhd':
+# Analyse/compile selected files
+analyse PATTERN='*.vhd':
 	@echo "> Analysing VHDL Files..."
-	FILES=$(/usr/bin/find . -name "{{pattern}}") && ghdl -a {{GHDL_FLAGS}} $FILES
+	FILES=$(/usr/bin/find . -name "{{PATTERN}}") && ghdl -a {{GHDL_FLAGS}} $FILES
 
-# See the help for 'elaborate'
-e unit: (elaborate unit)
-	
 # This option should only be used
 # if you have a custom install of GHDL that
 # uses GCC or LLVM. If you don't know what that
@@ -35,8 +32,8 @@ e unit: (elaborate unit)
 # this command
 # 
 # You probably don't need to run this command
-elaborate unit: (analyse '*.vhd')
-	ghdl -e {{GHDL_FLAGS}} {{unit}}
+_elaborate UNIT: (analyse '*.vhd')
+	ghdl -e {{GHDL_FLAGS}} {{UNIT}}
 
 # This command simulates a VHDL design unit,
 # and outputs a waveform. It does not precompile
@@ -44,23 +41,23 @@ elaborate unit: (analyse '*.vhd')
 #
 # TL;DR:
 # Simulate the chosen design unit, and output a waveform, wo/ compiling first
-raw-sim unit stop_time wave_out=DEFAULT_OUT:
-    ghdl -r {{GHDL_FLAGS}} {{unit}}  --stop-time={{stop_time}} --wave={{wave_out}}
+_sim UNIT STOP_TIME OUT='sim_wav.ghw':
+    ghdl -r {{GHDL_FLAGS}} {{UNIT}}  --stop-time={{STOP_TIME}} --wave={{OUT}}
 
 # Simulate a design unit, and output a waveform
-sim unit stop_time wave_out=DEFAULT_OUT: (elaborate unit) (raw-sim unit stop_time wave_out)
+sim UNIT STOP_TIME OUT='sim_wav.ghw': (_elaborate UNIT) (_sim UNIT STOP_TIME OUT)
 
 # Synthesises a design. By default generates a graphviz file. See https://ghdl.github.io/ghdl/using/Synthesis.html#cmdoption-ghdl-out for more output options 
-synth unit out="dot":
-	ghdl --synth {{GHDL_FLAGS}} --out={{out}} {{unit}} 
+synth UNIT FMT="dot":
+	ghdl --synth {{GHDL_FLAGS}} --out={{FMT}} {{UNIT}} 
 
 
 # Opens GTKWave with the default wave file
 [windows]
-open-gtkwave wave_file=DEFAULT_OUT:
-    gtkwave {{wave_file}}
+open-gtkwave FILE=DEFAULT_OUT:
+    gtkwave {{FILE}}
 
 # Opens GTKWave with the default wave file
 [macos]
-open-gtkwave wave_file=DEFAULT_OUT:
-    open /Applications/gtkwave.app {{wave_file}}
+open-gtkwave FILE=DEFAULT_OUT:
+    open /Applications/gtkwave.app {{FILE}}
