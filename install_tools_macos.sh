@@ -26,17 +26,6 @@ esac
 fi
 
 echo ""
-echo [-] Installing just ...
-brew install just
-echo [+] Installed!
-
-echo ""
-echo [-] Installing GHDL ...
-brew install ghdl
-echo [+] Installed!
-
-echo ""
-echo [-] Installing GTKWave ...
-brew install gtkwave
-echo [+] Installed!
+echo [-] Installing GHDL, just and GTKWave ...
+brew install just ghdl gtkwave && echo [+] Installed! || echo [x] Failed install
 

@@ -18,19 +18,19 @@ GHDL_FLAGS := "-fsynopsys -fexplicit -fcolor-diagnostics"
 # TL;DR:
 # Analyse/compile selected files
 [macos]
-analyse PATTERN='':
+analyse PATTERN='**/*.vhdl?':
 	@echo "> Analysing VHDL Files..."
 	ghdl -a {{GHDL_FLAGS}} {{PATTERN}}
 
 # Analyse/compile selected files
 [windows]
-analyse NAME_PAT='*.vhd' RECURSE=true:
+analyse NAME_PAT='*.vhd' RECURSE="-r":
 	@echo "> Analysing VHDL Files..."
-	{{ if(RECURSE) { gci -r -fi *.jar ghdl -a {{GHDL_FLAGS}} {{PATTERN}} } else { gci -r -fi *.jar ghdl -a {{GHDL_FLAGS}} {{PATTERN}} } }}
+	gci {{RECURSE}} -fi *.jar ghdl -a {{GHDL_FLAGS}} {{PATTERN}}
 	
 # See the docs for 'anlayse'
 [windows]
-a NAME_PAT='*.vhd' RECURSE=true: (analyse NAME_PAT RECURSE)
+a NAME_PAT='*.vhd' RECURSE="-r": (analyse NAME_PAT RECURSE)
 
 # See the docs for 'anlayse'
 [macos]

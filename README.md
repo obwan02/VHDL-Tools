@@ -13,9 +13,12 @@ Once you have [installed the requirements](#installation),
 I'd also recommend installing the [VHDL LS](https://marketplace.visualstudio.com/items?itemName=hbohlin.vhdl-ls) 
 extension for VS Code, if you use VS Code.
 
-Now, [download the `Justfile` from this repository](https://raw.githubusercontent.com/obwan02/VHDL-Tools/main/Justfile)
-and it to a project folder. For example, if I had a project
-@ `Documents/Lab1`, I would copy the `Justfile` to
+Now, download the `Justfile` from this repository. You can do this by
+clicking on the file in this repository, and then clicking the download button.
+
+To use the tools in a project, copy the `Justfile` into 
+your project folder. For example, if I had a project
+at `Documents/Lab1`, I would copy the `Justfile` to
 `Documents/Lab1/Justfile`.
 
 This should be done for each new project/folder that you
@@ -23,7 +26,7 @@ make. For example if I had a new project @ `Documents/Lab2`,
 I would repeat the same process as descibed above.
 
 Now, open a terminal in that directory, and run `just
---list` to see what command are available.
+--list` to see what commands are available.
 
 # Common Commands
 
