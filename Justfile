@@ -21,9 +21,16 @@ a PATTERN="*.vhd": (analyse PATTERN)
 # 
 # TL;DR:
 # Analyse/compile selected files
-analyse PATTERN='*.vhd':
+[windows]
+analyse PATTERN='':
 	@echo "> Analysing VHDL Files..."
-	FILES=$(/usr/bin/find . -name "{{PATTERN}}") && ghdl -a {{GHDL_FLAGS}} $FILES
+	ghdl -a {{GHDL_FLAGS}} {{PATTERN}}
+	#
+# Analyse/compile selected files
+[macos]
+analyse NAME_PAT='*.vhd' RECURSE=true:
+	@echo "> Analysing VHDL Files..."
+	{{ if RECURSE { gci -r -fi *.jar ghdl -a {{GHDL_FLAGS}} {{PATTERN}} } else { gci -r -fi *.jar ghdl -a {{GHDL_FLAGS}} {{PATTERN}} } }}
 
 # This option should only be used
 # if you have a custom install of GHDL that
