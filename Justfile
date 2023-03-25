@@ -18,16 +18,16 @@ DEFAULT_OUT := "sim_wav.ghw"
 # 
 # TL;DR:
 # Analyse/compile selected files
-[windows]
+[macos]
 analyse PATTERN='':
 	@echo "> Analysing VHDL Files..."
 	ghdl -a {{GHDL_FLAGS}} {{PATTERN}}
 
 # Analyse/compile selected files
-[macos]
+[windows]
 analyse NAME_PAT='*.vhd' RECURSE=true:
 	@echo "> Analysing VHDL Files..."
-	{{ if RECURSE { gci -r -fi *.jar ghdl -a {{GHDL_FLAGS}} {{PATTERN}} } else { gci -r -fi *.jar ghdl -a {{GHDL_FLAGS}} {{PATTERN}} } }}
+	{{ if(RECURSE) { gci -r -fi *.jar ghdl -a {{GHDL_FLAGS}} {{PATTERN}} } else { gci -r -fi *.jar ghdl -a {{GHDL_FLAGS}} {{PATTERN}} } }}
 	
 # See the docs for 'anlayse'
 [windows]

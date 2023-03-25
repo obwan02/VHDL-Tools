@@ -16,7 +16,7 @@ try {
 
 } catch {
 	Write-Host "[x] Failed one or more downloads. exiting ..."
-	return
+	break
 }
 
 # New Line
@@ -29,15 +29,15 @@ if( !(Test-Path -Path "$HOME\Programs" -PathType Container) ) {
 }
 
 try {
-	Expand-Archive -Path $GhdlTemp -DestinationPath "$HOME\Programs"
+	Expand-Archive -Force -Path $GhdlTemp -DestinationPath "$HOME\Programs"
 	Write-Host "[+] Extracted GHDL to $HOME\Programs"
-	Expand-Archive -Path $JustTemp -DestinationPath "$HOME\Programs\just"
+	Expand-Archive -Force -Path $JustTemp -DestinationPath "$HOME\Programs\just"
 	Write-Host "[+] Extracted just to $HOME\Programs"
-	Expand-Archive -Path $GtkWaveTemp -DestinationPath "$HOME\Programs"
+	Expand-Archive -Force -Path $GtkWaveTemp -DestinationPath "$HOME\Programs"
 	Write-Host "[+] Extracted GTKWave to $HOME\Programs"
 } catch {
 	Write-Host "[x] Failed to extract one or more archives. exiting ..."
-	return
+	break
 }
 
 # New Line
