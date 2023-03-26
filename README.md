@@ -86,6 +86,13 @@ automatically. Internally, this script just runs homebrew,
 so if you have any experience using homebrew, please
 consider manual installation.
 
+Note that when your run `just`/`ghdl` after first installation, you
+may have to allow it to run from your security preferences.
+To do this, go to `Apple Logo > System Settings > Privacy
+& Security`. Then find the message that says `Program ...
+has been blocked`, and click `Allow anyway`. This process
+might have to be repeated for llvm.
+
 ### Automatic 
 
 To install the requirements for this project, run
@@ -95,13 +102,69 @@ curl --proto '=https' --tlsv1.2 -sSLf https://raw.githubusercontent.com/obwan02/
 
 ### Manual
 
+
+#### Intel (x86_64)
+
 First, make sure you have [homebrew installed](brew.sh).
 
-Then, installed the required packages.
+Then, installed the required packages
 ```sh
 brew update
 brew install just ghdl gtkwave
 ```
+
+#### M1/M2 (arm64)
+
+First, make sure you have [homebrew installed](brew.sh).
+
+Then, install the required packages
+```sh
+brew update
+brew install just ghdl gtkwave
+```
+
+However, you also need to install llvm. Unfortunately,
+because the `ghdl` in homebrew is an x86_64 binary, you need
+to install the x86_64 version of llvm. To do this, you first
+need to install Rosetta:
+```sh
+/usr/sbin/softwareupdate --install-rosetta
+```
+
+Then, install the x86_64 version of homebrew:
+```sh
+arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" 
+```
+
+Then, figure out which version of llvm you should install.
+To do this, run `ghdl -v`, and there should be a line in the
+output of that command that says `llvm XX.XX.XX code
+generator`. The version of llvm you want to install
+corresponds to the major version of llvm that ghdl expects.
+For example, if I had the output `llvm 14.0.2 code
+generator`, I would install llvm 14.
+
+To install your desired llvm version, run
+```sh
+arch -x86_64  /usr/local/bin/brew install llvm@<VERSION>
+```
+
+So, for example if I was installing llvm 15, I would run:
+```sh
+arch -x86_64  /usr/local/bin/brew install llvm@15
+```
+
+Finally, you need to make sure that `ghdl` can pick up
+your llvm library. To do this create a symlink from
+`/usr/local/opt/llvm@<VERSION>` to `/usr/local/opt/llvm`
+
+For example, if I installed llvm 15:
+```sh
+ln -s /usr/local/opt/llvm@15 /usr/local/opt/llvm
+```
+
+Then, you're done :))
+
 ## Windows
 
 Unless you're spectactular at Powershell (or just really

@@ -97,7 +97,9 @@ if [[ $(uname -m) == 'arm64' ]]; then
 		echo [x] Failed x86_64 homebrew installation of llvm. exiting ...
 		exit
 	fi
-	echo [-] Installed llvm@$llvm_version
+	echo [+] Installed llvm@$llvm_version
+
+	ln -s /usr/local/opt/llvm@$llvm_version /usr/local/opt/llvm
 
 fi
 
