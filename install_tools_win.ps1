@@ -48,6 +48,9 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
 
 # Setup profile.ps1 so that we're always in path
 if (!(Test-Path -Path $PROFILE.CurrentUserAllHosts)) {
+	if (!(Test-Path -Path $PROFILE.CurrentUserAllHost.parent)) {
+		New-Item $PROFILE.CurrentUserAllHost.parent -ItemType Directory
+	}
   New-Item -ItemType File -Path $PROFILE.CurrentUserAllHosts -ErrorAction Ignore
 }
 
