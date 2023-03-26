@@ -1,5 +1,14 @@
 #!/bin/bash
 
+# If we are on M1
+if [[ $(uname -m) == 'arm64' ]]; then
+
+
+else
+	# If we are on an Intel MacOS
+	
+fi
+
 echo [?] Searching for homebrew installation ...
 if ! (command -v brew) then
 	echo [x] Could not find homebrew
