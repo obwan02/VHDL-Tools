@@ -59,7 +59,10 @@ if [[ $(uname -m) == 'arm64' ]]; then
 		echo [+] Found Rosetta
 	fi
 
-	echo ""
+	echo [+] Aquiring sudo access for x86_64 brew installation
+	# Aquire sudo for brew installation
+	sudo -A echo ""
+
 	echo [?] Checking for x86_64 homebrew installation
 	if ! [ -f '/usr/local/bin/brew' ]; then
 		echo [-] Could not find x86_64 homebrew installation
