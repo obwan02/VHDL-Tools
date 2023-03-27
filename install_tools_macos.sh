@@ -65,7 +65,7 @@ if [[ $(uname -m) == 'arm64' ]]; then
 		echo [-] Could not find x86_64 homebrew installation
 		echo [-] Installing x86_64 homebrew
 		arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" 
-		if [ $? -ne 0]; then
+		if [ $? -ne 0 ]; then
 			echo [x] Failed x86_64 homebrew installation. exiting ...
 			exit
 		fi
