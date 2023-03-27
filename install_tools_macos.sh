@@ -61,7 +61,7 @@ if [[ $(uname -m) == 'arm64' ]]; then
 
 	echo [+] Aquiring sudo access for x86_64 brew installation
 	# Aquire sudo for brew installation
-	sudo -A echo ""
+	sudo echo ""
 
 	echo [?] Checking for x86_64 homebrew installation
 	if ! [ -f '/usr/local/bin/brew' ]; then
