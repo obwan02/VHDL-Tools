@@ -1,7 +1,7 @@
 v 4
-file . "test.vhd" "7c8d771fbaa236662cf8ce1ce0709b822170db77" "20230326113134.025":
-  entity test_part1 at 1( 0) + 0 on 109;
-  architecture behave of test_part1 at 8( 161) + 0 on 110;
-file . "lab2_p1.vhd" "ced2bb16789d1ac0ce5ddcdd0d0c97d1582ce8a8" "20230326113133.951":
-  entity part1 at 1( 0) + 0 on 107;
-  architecture behave of part1 at 12( 273) + 0 on 108;
+file . "test.vhd" "7c8d771fbaa236662cf8ce1ce0709b822170db77" "20230327010651.432":
+  entity test_part1 at 1( 0) + 0 on 117;
+  architecture behave of test_part1 at 8( 161) + 0 on 118;
+file . "lab2_p1.vhd" "ced2bb16789d1ac0ce5ddcdd0d0c97d1582ce8a8" "20230327010651.359":
+  entity part1 at 1( 0) + 0 on 115;
+  architecture behave of part1 at 12( 273) + 0 on 116;
