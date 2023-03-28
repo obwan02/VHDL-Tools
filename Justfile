@@ -6,7 +6,8 @@ BIN_DIR := "bin"
 # If you wish to use the VHDL-2008 standard, specify `--std=08` instead.
 # 
 # Note that GHDL only has partial support for VHDL-2008.
-GHDL_FLAGS := "-fsynopsys -fexplicit -fcolor-diagnostics --std=93c --workdir=" + BIN_DIR
+GHDL_MODS := "-fsynopsys -fexplicit -fcolor-diagnostics --std=93c"
+GHDL_FLAGS := GHDL_MODS + " --workdir=" + BIN_DIR
 
 
 # This command analyses all files
