@@ -1,6 +1,13 @@
+set shell := ["zsh", "-o", "nullglob", "-c"]
 set windows-shell := ["powershell", "-c"]
 
-GHDL_FLAGS := "-fsynopsys -fexplicit -fcolor-diagnostics"
+BIN_DIR := "bin"
+# The `--std=93c` flag ensures that we are using the VHDL-93 standard.
+# If you wish to use the VHDL-2008 standard, specify `--std=08` instead.
+# 
+# Note that GHDL only has partial support for VHDL-2008.
+GHDL_FLAGS := "-fsynopsys -fexplicit -fcolor-diagnostics --std=93c --workdir=" + BIN_DIR
+
 
 # This command analyses all files
 # in the current directory, and all sub-directories.
@@ -18,23 +25,66 @@ GHDL_FLAGS := "-fsynopsys -fexplicit -fcolor-diagnostics"
 # TL;DR:
 # Analyse/compile selected files
 [macos]
-analyse PATTERN='**/*.vhdl?':
-	@echo "> Analysing VHDL Files..."
+analyse PATTERN='**/*.vh{d,dl}': _ensure_bin_dir
 	ghdl -a {{GHDL_FLAGS}} {{PATTERN}}
+
 
 # Analyse/compile selected files
 [windows]
-analyse NAME_PAT='*.vhd' RECURSE="-r":
-	@echo "> Analysing VHDL Files..."
-	gci {{RECURSE}} -fi *.jar ghdl -a {{GHDL_FLAGS}} {{PATTERN}}
-	
-# See the docs for 'anlayse'
-[windows]
-a NAME_PAT='*.vhd' RECURSE="-r": (analyse NAME_PAT RECURSE)
+analyse NAME_PAT='*.vhd' RECURSE="-r": _ensure_bin_dir
+	gci {{RECURSE}} -fi {{NAME_PAT}} | % { ghdl -a {{GHDL_FLAGS}} $_ }
 
-# See the docs for 'anlayse'
+
+# List the entities that are available
+[windows]
+list-entities: analyse
+	@echo "\\n\\033[1;32mEntities:\\033[0m"
+	@cat ./bin/work-obj*.cf | sls -patt 'entity ([a-zA-Z0-9_]+) at .*' -all  |% { $_.Matches.Groups } |? name -eq 1 |% { echo " - $_" }
+
+
+# List the entities that are available
 [macos]
-a PATTERN="*.vhd": (analyse PATTERN)
+list-entities: analyse
+	@echo "\\n\\033[1;32mEntities:\\033[0m"
+	@cat {{BIN_DIR}}/work-obj*.cf | sed -nE 's/entity ([a-zA-Z0-9_]+) at .*/- \1/p'
+	
+
+# Delete all build files
+clean: _ensure_bin_dir
+	ghdl clean {{GHDL_FLAGS}}
+
+# Compile all, and simulate a design unit
+sim UNIT STOP_TIME OUT='sim_wav.ghw': (_elaborate UNIT) (_sim UNIT STOP_TIME OUT)
+
+
+# Synthesises a design. Creates a graphiz dot file.
+synth UNIT FMT="dot": _ensure_bin_dir
+	ghdl --synth {{GHDL_FLAGS}} --out={{FMT}} {{UNIT}} 
+
+
+# Opens GTKWave with the default wave file
+[windows]
+open-gtkwave FILE='sim_wav.ghw':
+    Start-Process -FilePath "gtkwave" -ArgumentList "{{FILE}}"
+
+
+# Opens GTKWave with the default wave file
+[macos]
+open-gtkwave FILE='sim_wav.ghw':
+    open /Applications/gtkwave.app {{FILE}}
+
+
+# Make sure that binary dir always exists
+[windows]
+_ensure_bin_dir:
+	@mkdir {{BIN_DIR}} -ErrorAction Ignore
+
+
+# Make sure that binary dir always exists
+[macos]
+_ensure_bin_dir:
+	@mkdir {{BIN_DIR}} &> /dev/null || true
+
 
 # This option should only be used
 # if you have a custom install of GHDL that
@@ -43,8 +93,9 @@ a PATTERN="*.vhd": (analyse PATTERN)
 # this command
 # 
 # You probably don't need to run this command
-_elaborate UNIT: (analyse '*.vhd')
+_elaborate UNIT: analyse
 	ghdl -e {{GHDL_FLAGS}} {{UNIT}}
+
 
 # This command simulates a VHDL design unit,
 # and outputs a waveform. It does not precompile
@@ -52,23 +103,7 @@ _elaborate UNIT: (analyse '*.vhd')
 #
 # TL;DR:
 # Simulate the chosen design unit, and output a waveform, wo/ compiling first
-_sim UNIT STOP_TIME OUT='sim_wav.ghw':
+_sim UNIT STOP_TIME OUT='sim_wav.ghw': _ensure_bin_dir
     ghdl -r {{GHDL_FLAGS}} {{UNIT}}  --stop-time={{STOP_TIME}} --wave={{OUT}}
 
-# Compile all, and simulate a design unit, and output a waveform
-sim UNIT STOP_TIME OUT='sim_wav.ghw': (_elaborate UNIT) (_sim UNIT STOP_TIME OUT)
 
-# Synthesises a design. By default generates a graphviz file. See https://ghdl.github.io/ghdl/using/Synthesis.html#cmdoption-ghdl-out for more output options 
-synth UNIT FMT="dot":
-	ghdl --synth {{GHDL_FLAGS}} --out={{FMT}} {{UNIT}} 
-
-
-# Opens GTKWave with the default wave file
-[windows]
-open-gtkwave FILE='sim_wav.ghw':
-    gtkwave {{FILE}}
-
-# Opens GTKWave with the default wave file
-[macos]
-open-gtkwave FILE='sim_wav.ghw':
-    open /Applications/gtkwave.app {{FILE}}
