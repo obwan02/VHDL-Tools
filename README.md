@@ -7,6 +7,9 @@ This repo combines those open source programs into a
 (hopefully) friendly build system. The goal of this project
 is to make writing, compiling, and simulating VHDL fun!
 
+To start using these tools, head to the [installation
+section](#installation)
+
 # How it Works / How to Use
 
 Once you have [installed the requirements](#installation),
@@ -35,12 +38,11 @@ To analyse/compile your vhdl files, run
 just analyse
 ```
 
-To simulate a design, run
+To simulate a design, run the following command, where
+`<UNIT>` is the entity/design unit you want to simulate:
 ```sh
 just sim <UNIT> <STOP_TIME>
-```
-For example,
-```sh
+# EXAMPLE:
 just sim test_counter 300ns
 ```
 
@@ -48,6 +50,10 @@ To open GTKWave, run
 ```sh
 just open-gtkwave
 ```
+
+You can keep GTKWave open over multiple simulations. Once
+you re-run a simulation, click `File > Reload Waveform`, to
+reload the new simulation output wave.
 
 # Advanced Commands
 You can specify which files to analyse when running the
