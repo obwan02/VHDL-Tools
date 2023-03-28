@@ -1,7 +1,5 @@
 #!/bin/bash
 
-
-
 echo [?] Searching for homebrew installation ...
 if ! (command -v brew) then
 	echo [-] Could not find homebrew
@@ -9,27 +7,9 @@ if ! (command -v brew) then
 	/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)" 
 	if [ $? -ne 0]; then
 		echo [x] Failed to install homebrew. exiting ...
+		exit 1
 	fi
 	echo [+] Installed homebrew
-
-	case "${SHELL}" in
-  */bash*)
-    if [[ -r "${HOME}/.bash_profile" ]]
-    then
-      shell_profile="${HOME}/.bash_profile"
-    else
-      shell_profile="${HOME}/.profile"
-    fi
-    ;;
-  */zsh*)
-    shell_profile="${HOME}/.zprofile"
-    ;;
-  *)
-    shell_profile="${HOME}/.profile"
-    ;;
-
-esac
-	source $shell_profile
 else
 	echo [+] Found homebrew installation
 fi
@@ -39,7 +19,7 @@ echo [-] Installing ghdl
 brew install ghdl
 if [ $? -ne 0 ]; then
 	echo [x] Failed native installation of ghdl. exiting ...
-	exit
+	exit 2
 fi
 echo [+] Installed ghdl
 echo ""
@@ -59,18 +39,18 @@ if [[ $(uname -m) == 'arm64' ]]; then
 		echo [+] Found Rosetta
 	fi
 
-	echo [+] Aquiring sudo access for x86_64 brew installation
-	# Aquire sudo for brew installation
-	sudo echo ""
 
 	echo [?] Checking for x86_64 homebrew installation
 	if ! [ -f '/usr/local/bin/brew' ]; then
 		echo [-] Could not find x86_64 homebrew installation
+		echo [+] Aquiring sudo access for x86_64 brew installation
+		# Aquire sudo for brew installation
+		sudo echo "" || exit -1
 		echo [-] Installing x86_64 homebrew
 		arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" 
 		if [ $? -ne 0 ]; then
 			echo [x] Failed x86_64 homebrew installation. exiting ...
-			exit
+			exit 3
 		fi
 		echo [+] Installed x86_64 homebrew
 	else
@@ -98,12 +78,11 @@ if [[ $(uname -m) == 'arm64' ]]; then
 	arch -x86_64 /usr/local/bin/brew install llvm@$llvm_version
 	if [ $? -ne 0 ]; then
 		echo [x] Failed x86_64 homebrew installation of llvm. exiting ...
-		exit
+		exit 4
 	fi
 	echo [+] Installed llvm@$llvm_version
 
-	ln -s /usr/local/opt/llvm@$llvm_version /usr/local/opt/llvm
-
+	ln -sf /usr/local/opt/llvm@$llvm_version /usr/local/opt/llvm || exit -1
 fi
 
 # If we are on an Intel MacOS, we can ignore 
@@ -111,5 +90,46 @@ fi
 
 echo ""
 echo [-] Installing GHDL, just and GTKWave ...
-brew install just ghdl gtkwave && echo [+] Installed! || echo [x] Failed install of homebrew packages
+brew install just ghdl gtkwave
 
+if [ $? -ne 0 ]; then
+	echo [x] Failed to install homebrew packages. exiting ...
+	exit 5
+fi
+
+echo [+] Installed homebrew packages
+
+echo ""
+echo [-] Creating 'new-vhdl-project' alias
+
+case "${SHELL}" in 
+*/bash*)
+	if !(command -v new-vhdl-project) then
+		cat << EOF >> ~/.bashrc
+function new-vhdl-project {
+	echo "[-] Downloading latest Justfile..."
+	curl -#SL "https://raw.githubusercontent.com/obwan02/VHDL-Tools/main/Justfile" -o Justfile && echo "[+] Success!" || echo "[-] Failed :(("
+}
+EOF
+		echo [+] Created alias in ~/.bashrc. Restart your shell to access the alias
+	else
+		echo [+] Alias already exists in ~/.bashrc
+	fi
+	;;
+*/zsh*)
+	if !(command -v new-vhdl-project) then
+		cat << EOF >> ~/.zshrc
+function new-vhdl-project {
+	echo "[-] Downloading latest Justfile..."
+	curl -#SL "https://raw.githubusercontent.com/obwan02/VHDL-Tools/main/Justfile" -o Justfile && echo "[+] Success!" || echo "[-] Failed :(("
+}
+EOF
+		echo [+] Created alias in ~/.zshrc. Restart your shell to access the alias
+	else
+		echo [+] Alias already exists in ~/.zshrc
+	fi
+	;;
+*)
+	echo
+	;;
+esac
