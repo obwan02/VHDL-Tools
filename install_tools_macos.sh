@@ -121,7 +121,7 @@ EOF
 		cat << EOF >> ~/.zshrc
 function new-vhdl-project {
 	echo "[-] Downloading latest Justfile..."
-	curl -#SL "https://raw.githubusercontent.com/obwan02/VHDL-Tools/main/Justfile" -o Justfile && echo "[+] Success!" || echo "[-] Failed :(("
+	curl -#SL "https://raw.githubusercontent.com/obwan02/VHDL-Tools/main/Justfile" -o Justfile && echo "[+] Success!" || echo "[-] Failed :("
 }
 EOF
 		echo [+] Created alias in ~/.zshrc. Restart your shell to access the alias
