@@ -27,9 +27,11 @@ section](#installation)
 
 # How to Use
 
-Once you have [installed the requirements](#installation),
-I'd also recommend installing the [VHDL LS](https://marketplace.visualstudio.com/items?itemName=hbohlin.vhdl-ls) 
-extension for VS Code, if you use VS Code.
+Once you have installed the tools ([macos install](#installation---macos), [windows install](#installation---windows), 
+I would recommend installing the [VHDL LS](https://marketplace.visualstudio.com/items?itemName=hbohlin.vhdl-ls) 
+extension for VS Code, if you use VS Code. This extension
+provides real-time syntax-error highlighting, along with
+other features.
 
 To start using the build system, navigate to the directory
 where your vhdl code is stored. Then, crack open a terminal,
@@ -73,7 +75,7 @@ To open GTKWave, run
 just open-gtkwave
 ```
 For more information on GTKWave, see the [using GTKWave
-section](#Using-GTKWave)
+section](#using-gtkwave)
 
 ## Advanced Commands
 You can specify which files to analyse when running the
@@ -154,7 +156,7 @@ curl --proto '=https' --tlsv1.2 -sSLf https://raw.githubusercontent.com/obwan02/
 
 ### Intel (x86_64)
 
-First, make sure you have [homebrew installed](brew.sh).
+First, make sure you have [homebrew installed](https://brew.sh).
 
 Then, installed the required packages
 ```sh
@@ -167,7 +169,7 @@ See the `install_tools_macos.sh` script for inspiration.
 
 ### M1/M2 (arm64)
 
-First, make sure you have [homebrew installed](brew.sh).
+First, make sure you have [homebrew installed](https://brew.sh).
 
 Then, install the required packages
 ```sh
@@ -273,7 +275,7 @@ Behind the scenes this repo relies on amazing OSS
 projects. These projects are:
 
 - [GHDL: a VHDL 2008/93/87 simulator](https://github.com/ghdl/ghdl)
-- [just: Just a command runner](just.systems)
+- [just: Just a command runner](https://just.systems)
 - [GTKWave](https://gtkwave.sourceforge.net/)
 
 # Contributing
