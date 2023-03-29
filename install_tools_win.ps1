@@ -91,12 +91,13 @@ Write-Host ""
 Write-Host "[-] Creating 'new-vhdl-project' alias"
 
 if( !(Get-Command new-vhdl-project -ErrorAction SilentlyContinue) ) {
-	Write-Host "[+] Created the alias in " + $PROFILE.CurrentUserAllHosts}
 	echo "
 function new-vhdl-project {
 	Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/obwan02/VHDL-Tools/main/Justfile' -OutFile Justfile 
 }
 " | Add-Content $PROFILE.CurrentUserAllHosts -Encoding UTF8
+
+	Write-Host "[+] Created the alias in " + $PROFILE.CurrentUserAllHosts
 } else {
 	Write-Host "[+] Alias already exists"
 }
