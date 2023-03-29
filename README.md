@@ -3,9 +3,11 @@
 ModelSim is a terrible piece of software. Luckily, there are
 open source alternatives, that are friendlier and better.
 
-This repo combines those open source programs into a
-(hopefully) friendly build system. The goal of this project
-is to make writing, compiling, and simulating VHDL fun!
+This repo combines open source tools into a open source
+build system that is fast, and user-friendly.
+
+The goal of this project is to make writing, compiling, and
+simulating VHDL fun!
 
 To start using these tools, head to the [installation
 section](#installation)
@@ -16,20 +18,25 @@ Once you have [installed the requirements](#installation),
 I'd also recommend installing the [VHDL LS](https://marketplace.visualstudio.com/items?itemName=hbohlin.vhdl-ls) 
 extension for VS Code, if you use VS Code.
 
-Now, download the `Justfile` from this repository. You can do this by
-clicking on the file in this repository, and then clicking the download button.
+To start using the build system, navigate to the directory
+where your vhdl code is stored. Then, crack open a terminal,
+(powershell if you are using windows), and type
+```sh
+new-vhdl-project
+```
 
-To use the tools in a project, copy the `Justfile` into 
-your project folder. For example, if I had a project
-at `Documents/Lab1`, I would copy the `Justfile` to
-`Documents/Lab1/Justfile`.
+In your terminal, you can now run `just --list` to see what
+build actions are available.
 
-This should be done for each new project/folder that you
-make. For example if I had a new project @ `Documents/Lab2`,
-I would repeat the same process as descibed above.
+### Notes
 
-Now, open a terminal in that directory, and run `just
---list` to see what commands are available.
+- When a VHDL project is created, it will consider
+all code in all subdirectories to be a part of the current
+project.
+- Build actions are only available after running
+  `new-vhdl-project`
+- Build actions are available from the project directory,
+  and all subdirectories
 
 # Common Commands
 
@@ -50,10 +57,8 @@ To open GTKWave, run
 ```sh
 just open-gtkwave
 ```
-
-You can keep GTKWave open over multiple simulations. Once
-you re-run a simulation, click `File > Reload Waveform`, to
-reload the new simulation output wave.
+For more information on GTKWave, see the [using GTKWave
+section](#Using-GTKWave)
 
 # Advanced Commands
 You can specify which files to analyse when running the
@@ -82,6 +87,13 @@ synthesizable. NOTE: This operation is still experimental
 in GHDL (the underlying compiler/simulator). The `FMT`
 paramter can be used to specify what type of file should be
 output. [See the GHDL docs for more info](https://ghdl.github.io/ghdl/using/Simulation.html)
+
+# Using GTKWave
+
+GTKWave is similar to the simulation tools provided by
+ModelSim
+
+// TODO FROM HERE
 
 # Installation
 

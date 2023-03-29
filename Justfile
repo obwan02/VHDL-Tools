@@ -39,7 +39,7 @@ analyse NAME_PAT='*.vhd' RECURSE="-r": _ensure_bin_dir
 # List the entities that are available
 [windows]
 list-entities: analyse
-	@echo "\\n\\033[1;32mEntities:\\033[0m"
+	@echo "`n$([char]27)[1;32mEntities:$([char]27)[0m"
 	@cat ./bin/work-obj*.cf | sls -patt 'entity ([a-zA-Z0-9_]+) at .*' -all  |% { $_.Matches.Groups } |? name -eq 1 |% { echo " - $_" }
 
 
