@@ -15,10 +15,10 @@ section](#installation)
 # Table of Contents
 
 1. [How to Use](#how-to-use)
-2. [Common Commands](#command-commands)
-  a. [Advanced Commands](#advanced-commands)
+2. [Common Commands](#common-commands)
+    - [Advanced Commands](#advanced-commands)
 3. [Using GTKWave](#using-gtkwave)
-  a. [Hot Reloading](#hot-reloading)
+    - [Hot Reloading](#hot-reloading)
 4. [Installation (MacOS)](#installation---macos)
 5. [Installation (Windows)](#installation---windows)
 6. [Acknowledgements](#acknowledgements)
