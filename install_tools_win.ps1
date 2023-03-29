@@ -22,19 +22,21 @@ try {
 # New Line
 Write-Host ""
 
+$BIN_OUT = [Environment]::GetFolderPath([Environment+SpecialFolder]::MyDocuments)
+
 Write-Host "[-] Unzipping downloaded archives"
 
-if( !(Test-Path -Path "$HOME\Programs" -PathType Container) ) {
-	New-Item -Path "$HOME\Programs" -ItemType Directory -Force
+if( !(Test-Path -Path "$BIN_OUT\VHDL Tools" -PathType Container) ) {
+	New-Item -Path "$BIN_OUT\VHDL Tools" -ItemType Directory -Force
 }
 
 try {
-	Expand-Archive -Force -LiteralPath $GhdlTemp -DestinationPath "$HOME\Programs"
-	Write-Host "[+] Extracted GHDL to $HOME\Programs"
-	Expand-Archive -Force -LiteralPath $JustTemp -DestinationPath "$HOME\Programs\just"
-	Write-Host "[+] Extracted just to $HOME\Programs"
-	Expand-Archive -Force -LiteralPath $GtkWaveTemp -DestinationPath "$HOME\Programs"
-	Write-Host "[+] Extracted GTKWave to $HOME\Programs"
+	Expand-Archive -Force -LiteralPath $GhdlTemp -DestinationPath "$BIN_OUT\VHDL Tools"
+	Write-Host "[+] Extracted GHDL to $BIN_OUT\VHDL Tools"
+	Expand-Archive -Force -LiteralPath $JustTemp -DestinationPath "$BIN_OUT\VHDL Tools\just"
+	Write-Host "[+] Extracted just to $BIN_OUT\VHDL Tools"
+	Expand-Archive -Force -LiteralPath $GtkWaveTemp -DestinationPath "$BIN_OUT\VHDL Tools"
+	Write-Host "[+] Extracted GTKWave to $BIN_OUT\VHDL Tools"
 } catch {
 	Write-Host "[x] Failed to extract one or more archives. exiting ..."
 	break
@@ -62,7 +64,7 @@ if( !(Get-Command ghdl -ErrorAction SilentlyContinue) ) {
 	Write-Host " - Could not find GHDL in PATH"
 	Write-Host " + Modifying profile to add GHDL to PATH"
 
-	echo "`$env:PATH = `$env:PATH + ';' + '$HOME\Programs\GHDL\bin'" | Add-Content $PROFILE.CurrentUserAllHosts -Encoding UTF8
+	echo "`$env:PATH = `$env:PATH + ';' + '$BIN_OUT\VHDL Tools\GHDL\bin'" | Add-Content $PROFILE.CurrentUserAllHosts -Encoding UTF8
 } else {
 	Write-Host " + Found GHDL binary in PATH @ $((Get-Command ghdl).Path)"
 }
@@ -72,7 +74,7 @@ if( !(Get-Command gtkwave -ErrorAction SilentlyContinue) ) {
 	Write-Host " - Could not find just in PATH"
 	Write-Host " + Modifying profile to add just to PATH"
 
-	echo "`$env:PATH = `$env:PATH + ';' + '$HOME\Programs\just'" | Add-Content $PROFILE.CurrentUserAllHosts -Encoding UTF8
+	echo "`$env:PATH = `$env:PATH + ';' + '$BIN_OUT\VHDL Tools\just'" | Add-Content $PROFILE.CurrentUserAllHosts -Encoding UTF8
 } else {
 	Write-Host " + Found just binary in PATH @ $((Get-Command just).Path)"
 }
@@ -82,7 +84,7 @@ if( !(Get-Command gtkwave -ErrorAction SilentlyContinue) ) {
 	Write-Host " - Could not find GTKWave in PATH"
 	Write-Host " + Modifying profile to add GTKWave to PATH"
 
-	echo "`$env:PATH = `$env:PATH + ';' + '$HOME\Programs\gtkwave64\bin'" | Add-Content $PROFILE.CurrentUserAllHosts -Encoding UTF8
+	echo "`$env:PATH = `$env:PATH + ';' + '$BIN_OUT\VHDL Tools\gtkwave64\bin'" | Add-Content $PROFILE.CurrentUserAllHosts -Encoding UTF8
 } else {
 	Write-Host " + Found GTKWave binary in PATH @ $((Get-Command gtkwave).Path)"
 }
