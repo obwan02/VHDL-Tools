@@ -27,15 +27,15 @@ $BIN_OUT = $HOME
 Write-Host "[-] Unzipping downloaded archives"
 
 if( !(Test-Path -Path "$BIN_OUT\VHDL Tools" -PathType Container) ) {
-	New-Item -Path "$BIN_OUT\VHDL Tools" -ItemType Directory -Force
+	New-Item -Path "$BIN_OUT\VHDL Tools" -ItemType Directory -Force | Out-Null
 }
 
 try {
-	Expand-Archive -Force -LiteralPath $GhdlTemp -DestinationPath "$BIN_OUT\VHDL Tools"
+	Expand-Archive -Force -LiteralPath $GhdlTemp -DestinationPath "$BIN_OUT\VHDL Tools" | Out-Null
 	Write-Host "[+] Extracted GHDL to $BIN_OUT\VHDL Tools"
-	Expand-Archive -Force -LiteralPath $JustTemp -DestinationPath "$BIN_OUT\VHDL Tools\just"
+	Expand-Archive -Force -LiteralPath $JustTemp -DestinationPath "$BIN_OUT\VHDL Tools\just" | Out-Null
 	Write-Host "[+] Extracted just to $BIN_OUT\VHDL Tools"
-	Expand-Archive -Force -LiteralPath $GtkWaveTemp -DestinationPath "$BIN_OUT\VHDL Tools"
+	Expand-Archive -Force -LiteralPath $GtkWaveTemp -DestinationPath "$BIN_OUT\VHDL Tools" | Out-Null
 	Write-Host "[+] Extracted GTKWave to $BIN_OUT\VHDL Tools"
 } catch {
 	Write-Host "[x] Failed to extract one or more archives. exiting ..."
@@ -50,10 +50,8 @@ Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
 
 # Setup profile.ps1 so that we're always in path
 if (!(Test-Path -Path $PROFILE.CurrentUserAllHosts)) {
-  New-Item -ItemType File -Path $PROFILE.CurrentUserAllHosts -ErrorAction Ignore -Force
+  New-Item -ItemType File -Path $PROFILE.CurrentUserAllHosts -ErrorAction Ignore -Force | Out-Null
 }
-
-$ProfileContent = Get-Content $PROFILE.CurrentUserAllHosts
 
 Write-Host "[-] Adding programs to PATH. This is done through modifying the current user's powershell profile. See https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_profiles?view=powershell-7.3 for more information."
 
