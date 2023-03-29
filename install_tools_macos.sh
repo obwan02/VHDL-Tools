@@ -104,7 +104,7 @@ echo [-] Creating 'new-vhdl-project' alias
 
 case "${SHELL}" in 
 */bash*)
-	if !(command -v new-vhdl-project) then
+	if !(bash -c 'source ~/.zshrc && command -v new-vhdl-project' &> /dev/null) then
 		cat << EOF >> ~/.bashrc
 function new-vhdl-project {
 	echo "[-] Downloading latest Justfile..."
@@ -117,7 +117,7 @@ EOF
 	fi
 	;;
 */zsh*)
-	if !(command -v new-vhdl-project) then
+	if !(zsh -c 'source ~/.zshrc && command -v new-vhdl-project' &> /dev/null) then
 		cat << EOF >> ~/.zshrc
 function new-vhdl-project {
 	echo "[-] Downloading latest Justfile..."
@@ -130,6 +130,7 @@ EOF
 	fi
 	;;
 *)
-	echo
+	echo "[x] Shell '$SHELL' is not supported :("
+	exit 8
 	;;
 esac
