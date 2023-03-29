@@ -22,7 +22,7 @@ try {
 # New Line
 Write-Host ""
 
-$BIN_OUT = [Environment]::GetFolderPath([Environment+SpecialFolder]::MyDocuments)
+$BIN_OUT = $HOME
 
 Write-Host "[-] Unzipping downloaded archives"
 
