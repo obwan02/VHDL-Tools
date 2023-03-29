@@ -100,6 +100,7 @@ function new-vhdl-project {
 " | Add-Content $PROFILE.CurrentUserAllHosts -Encoding UTF8
 
 	Write-Host "[+] Created the alias in " + $PROFILE.CurrentUserAllHosts
+	Write-Host "[*] Please restart your current shell to allow the 'new-vhdl-project' alias to wor alias to work"
 } else {
 	Write-Host "[+] Alias already exists"
 }

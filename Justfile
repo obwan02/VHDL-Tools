@@ -78,7 +78,7 @@ open-gtkwave FILE='sim_wav.ghw':
 # Make sure that binary dir always exists
 [windows]
 _ensure_bin_dir:
-	@mkdir {{BIN_DIR}} -ErrorAction Ignore
+	@mkdir {{BIN_DIR}} -ErrorAction Ignore; $global:LastExitCode = 0
 
 
 # Make sure that binary dir always exists
