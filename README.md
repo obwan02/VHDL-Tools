@@ -3,7 +3,14 @@
 ModelSim is a terrible piece of software. Luckily, there are
 open source alternatives, that are friendlier and better.
 This repo combines these open source tools into a open
-source build system that is fast, and user-friendly. 
+source build system that is fast, and user-friendly.
+
+The goal for this project is for it to be (in order of
+priority):
+
+1. User Friendly
+2. Hackable (easy to modify)
+3. Portable
 
 To install the build system, head to the installation
 section for your OS.
@@ -17,8 +24,9 @@ section for your OS.
     - [Hot Reloading](#hot-reloading)
 4. [Installation (MacOS)](#installation---macos)
 5. [Installation (Windows)](#installation---windows)
-6. [Acknowledgements](#acknowledgements)
-7. [Contributing](#contributing)
+6. [Modifying/Hacking](#modifyinghacking)
+7. [Acknowledgements](#acknowledgements)
+8. [Contributing](#contributing)
   
 
 # How to Use
@@ -264,6 +272,53 @@ powershell profile.
 The installation script modifies you powershell profile to
 make the installed tools available everywhere. As such, you
 will only be able to access the tools from powershell.
+
+# Modifying / Hacking
+
+After you install the tools, the only thing that is needed
+to make the project build is the `Justfile`. This file is
+similar to `make`s `Makefile` (`make` is a linux build
+tool). The `Justfile` specifies what commands should be run
+when you type `just <COMMAND>`. When you type a command,
+`just` will search through the `Justfile` for that command,
+and will run it. See the [just docs](https://just.systems/man/en/chapter_1.html)
+for more information.
+
+N.B. The `new-vhdl-project` command, simply downloads the
+lastest `Justfile` from github. 
+
+Hopefully, by using a `Justfile`, this project can easily be
+modified/hacked. To get started, you can either read the
+[just docs](https://just.systems/man/en/chapter_1.html), or
+if you are feeling adventurous, you can just hop in and
+start messing around the `Justfile`.
+
+Some ideas for modifications:
+- A `just format` command, that formats all your files using
+  `ghdl`.
+
+- If you require custom libraries, you could add them to the
+  build flags at the top of the `Justfile`.
+
+- By default, `ghdl` targets the VHDL-1993 standard.
+  However, it also has partial support for the VHDL-2008
+  standard. N.B. Quartus doesn't support VHDL-2008 code, but
+  you could enable VHDL-2008 code in just the test benches.
+
+- Create separate commands for building test
+  benches and building entities.
+
+- Use `ghdl`s pretty-printy HTML feature to automatically
+  create HTML files that containa syntax-highlighted VHDL
+  code.
+
+- Create a strict-compile mode, where the `-fsynopsys` and
+  `-fexplicit` flags aren't passed to `ghdl`. The
+  `-fsyopsys` flag enables the non-standard (and not
+  recommended) `std_logic_unsigned` library, and the
+  `-fexplicit` flag tells `ghdl` to choose the most
+  applicable overloaded function/operator (which is also not
+  recommened, as it breaks encapsulation)
 
 # Acknowledgements
 
