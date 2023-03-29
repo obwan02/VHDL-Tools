@@ -2,15 +2,11 @@
 
 ModelSim is a terrible piece of software. Luckily, there are
 open source alternatives, that are friendlier and better.
+This repo combines these open source tools into a open
+source build system that is fast, and user-friendly. 
 
-This repo combines open source tools into a open source
-build system that is fast, and user-friendly.
-
-The goal of this project is to make writing, compiling, and
-simulating VHDL fun!
-
-To start using these tools, head to the [installation
-section](#installation)
+To install the build system, head to the installation
+section for your OS.
 
 # Table of Contents
 
@@ -27,7 +23,7 @@ section](#installation)
 
 # How to Use
 
-Once you have installed the tools ([macos install](#installation---macos), [windows install](#installation---windows), 
+Once you have installed the tools ([macos install](#installation---macos), [windows install](#installation---windows)), 
 I would recommend installing the [VHDL LS](https://marketplace.visualstudio.com/items?itemName=hbohlin.vhdl-ls) 
 extension for VS Code, if you use VS Code. This extension
 provides real-time syntax-error highlighting, along with
