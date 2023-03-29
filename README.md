@@ -12,7 +12,20 @@ simulating VHDL fun!
 To start using these tools, head to the [installation
 section](#installation)
 
-# How it Works / How to Use
+# Table of Contents
+
+1. [How to Use](#how-to-use)
+2. [Common Commands](#command-commands)
+  a. [Advanced Commands](#advanced-commands)
+3. [Using GTKWave](#using-gtkwave)
+  a. [Hot Reloading](#hot-reloading)
+4. [Installation (MacOS)](#installation---macos)
+5. [Installation (Windows)](#installation---windows)
+6. [Acknowledgements](#acknowledgements)
+7. [Contributing](#contributing)
+  
+
+# How to Use
 
 Once you have [installed the requirements](#installation),
 I'd also recommend installing the [VHDL LS](https://marketplace.visualstudio.com/items?itemName=hbohlin.vhdl-ls) 
@@ -26,7 +39,9 @@ new-vhdl-project
 ```
 
 In your terminal, you can now run `just --list` to see what
-build actions are available.
+build actions are available. For information on what build
+actions to use, see the [common commands
+section](#common-commands)
 
 ### Notes
 
@@ -60,10 +75,11 @@ just open-gtkwave
 For more information on GTKWave, see the [using GTKWave
 section](#Using-GTKWave)
 
-# Advanced Commands
+## Advanced Commands
 You can specify which files to analyse when running the
-`just_analyse` command. For example:
+`just analyse` command. For example:
 ```sh
+# Only analyse the test_part1.vhd file
 just analyse pattern="test_part1.vhd"
 ```
 To get more information on analysing, [see the GHDL docs](https://ghdl.github.io/ghdl/using/InvokingGHDL.html#analysis-a).
@@ -91,13 +107,28 @@ output. [See the GHDL docs for more info](https://ghdl.github.io/ghdl/using/Simu
 # Using GTKWave
 
 GTKWave is similar to the simulation tools provided by
-ModelSim
+ModelSim, expect better.
 
-// TODO FROM HERE
+To open GTKWave, run `just open-gtkwave`. Note that you
+should run a simulation before opening GTKWave.
 
-# Installation
+The rest of the application should is fairly similar to
+ModelSim, and is fairly intuitive.
 
-## MacOS
+## 'Hot' Reloading
+
+One of the most aluring features of GTKWave is the ability
+to 'hot' reload simulated waves. This means that you can
+have a waveform open in GTKWave, re-run a simulation, and
+'hot'-reload the waveform, without losing your position,
+signals, or signals formats.
+
+To 'hot' reload, first, ensure that you have run a
+simulation and keep GTKWave open. Next, change your code to
+your hearts desire, and re-run your simulation. Then, switch
+back to GTKWave, and click `File > Reload Waveform`.
+
+# Installation - MacOS
 
 You can either install the requirements manually, or
 automatically. Internally, this script just runs homebrew,
@@ -111,17 +142,17 @@ To do this, go to `Apple Logo > System Settings > Privacy
 has been blocked`, and click `Allow anyway`. This process
 might have to be repeated for llvm.
 
-### Automatic 
+## Automatic 
 
 To install the requirements for this project, run
 ```sh
 curl --proto '=https' --tlsv1.2 -sSLf https://raw.githubusercontent.com/obwan02/VHDL-Tools/main/install_tools_macos.sh | bash
 ```
 
-### Manual
+## Manual
 
 
-#### Intel (x86_64)
+### Intel (x86_64)
 
 First, make sure you have [homebrew installed](brew.sh).
 
@@ -131,7 +162,10 @@ brew update
 brew install just ghdl gtkwave
 ```
 
-#### M1/M2 (arm64)
+Then, you need to create your own `new-vhdl-project` alias.
+See the `install_tools_macos.sh` script for inspiration.
+
+### M1/M2 (arm64)
 
 First, make sure you have [homebrew installed](brew.sh).
 
@@ -181,23 +215,32 @@ For example, if I installed llvm 15:
 ln -s /usr/local/opt/llvm@15 /usr/local/opt/llvm
 ```
 
-Then, you're done :))
+Then, you need to create your own `new-vhdl-project` alias.
+See the `install_tools_macos.sh` script for inspiration.
 
-## Windows
+# Installation - Windows
 
-Unless you're spectactular at Powershell (or just really
-masochistic), there is no manual installation.
+If you have Powershell Core, and Powershell 5.1, installed,
+make sure that you run the install script in the version of
+Powershell that you want the tools to be available on. If
+you want the tools to be available in both versions, run the
+install script in both versions.
 
-### Automatic
+Note that installation on University computers isn't
+advised. This is mainly because powershell profiles are
+stored in OneDrive, which means that you cannot have a
+profile per university machine. 
+
+## Automatic
 
 From inside powershell, run:
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/obwan02/VHDL-Tools/main/install_tools_win.ps1'))
 ```
 
-### Manual
+## Manual
 
-Ok if you reaalllllllllly want to manually install your
+If you reaalllllllllly want to manually install your
 software, these are the instructions:
 
 First, download the archives for the programs:
@@ -210,15 +253,15 @@ location. If you are installing these programs on the
 university computers, I'd recommend extracing to a location
 accessible from all computers.
 
-Now, if you are running on a home computer, I'd recommend
+If you are running on a home computer, I'd recommend
 simply modify your `PATH` environment variable so that they
 include your newly acquired binaries.
 
-If you are running on a university computer, modifying the
-`PATH` is a bit harder. I'd instead recommend modifying your
-`profile.ps1` script (see https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_profiles?view=powershell-7.3)
+Additionally, if you run a manual installation, you will
+have to create your own `new-vhdl-project` alias in your
+powershell profile.
 
-# Windows Specific Notes 
+## Windows Specific Notes 
 
 The installation script modifies you powershell profile to
 make the installed tools available everywhere. As such, you
@@ -232,3 +275,13 @@ projects. These projects are:
 - [GHDL: a VHDL 2008/93/87 simulator](https://github.com/ghdl/ghdl)
 - [just: Just a command runner](just.systems)
 - [GTKWave](https://gtkwave.sourceforge.net/)
+
+# Contributing
+
+If you have any feature requests or 🐛s (bugs), please open an
+issue in the issues tab on GitHub. 
+
+If you want to contribute any code, feel free to create a
+PR (although try to submit a PR that fixes a particular open
+issue :) ).
+
