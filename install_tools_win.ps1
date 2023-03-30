@@ -46,7 +46,7 @@ try {
 Write-Host ""
 
 # Set execution policy so that powershell profile always loads
-Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted -ErrorAction Ignore
 
 # Setup profile.ps1 so that we're always in path
 if (!(Test-Path -Path $PROFILE.CurrentUserAllHosts)) {
