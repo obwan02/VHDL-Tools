@@ -75,7 +75,7 @@ if [[ $(uname -m) == 'arm64' ]]; then
 
 
 	echo [-] Installing llvm@$llvm_version
-	arch -x86_64 /usr/local/bin/brew install llvm@$llvm_version
+	arch -x86_64 /usr/local/bin/brew install llvm@$llvm_version --no-quarantine
 	if [ $? -ne 0 ]; then
 		echo [x] Failed x86_64 homebrew installation of llvm. exiting ...
 		exit 4
@@ -90,7 +90,7 @@ fi
 
 echo ""
 echo [-] Installing GHDL, just and GTKWave ...
-brew install just ghdl gtkwave
+brew install just ghdl gtkwave --no-quarantine
 
 if [ $? -ne 0 ]; then
 	echo [x] Failed to install homebrew packages. exiting ...
