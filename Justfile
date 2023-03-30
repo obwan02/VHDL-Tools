@@ -40,14 +40,14 @@ analyse NAME_PAT='*.vhd' RECURSE="-r": _ensure_bin_dir
 [windows]
 list-entities: analyse
 	@echo "`n$([char]27)[1;32mEntities:$([char]27)[0m"
-	@cat ./bin/work-obj*.cf | sls -patt 'entity ([a-zA-Z0-9_]+) at .*' -all  |% { $_.Matches.Groups } |? name -eq 1 |% { echo " - $_" }
+	@cat ./bin/work-obj*.cf | sls -patt 'entity ([a-zA-Z0-9_]+) at .*' -all  |% { $_.Matches.Groups } |? name -eq 1 | Sort-Object | % { echo " - $_" }
 
 
 # List the entities that are available
 [macos]
 list-entities: analyse
 	@echo "\\n\\033[1;32mEntities:\\033[0m"
-	@cat {{BIN_DIR}}/work-obj*.cf | sed -nE 's/entity ([a-zA-Z0-9_]+) at .*/- \1/p'
+	@cat {{BIN_DIR}}/work-obj*.cf | sed -nE 's/entity ([a-zA-Z0-9_]+) at .*/- \1/p' | sort
 	
 
 # Delete all build files
