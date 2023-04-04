@@ -74,6 +74,11 @@ just sim <UNIT> <STOP_TIME>
 just sim test_counter 300ns
 ```
 
+To list all entities in your design, run:
+```sh
+just list-entities
+```
+
 To open GTKWave, run
 ```sh
 just open-gtkwave
