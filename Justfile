@@ -53,6 +53,7 @@ list-entities: analyse
 # Delete all build files
 clean: _ensure_bin_dir
 	ghdl clean {{GHDL_FLAGS}}
+	rm -rf {{BIN_DIR}}/*
 
 # Compile all, and simulate a design unit
 sim UNIT STOP_TIME OUT='sim_wav.ghw': (_elaborate UNIT) (_sim UNIT STOP_TIME OUT)
